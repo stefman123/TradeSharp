@@ -1,0 +1,22 @@
+﻿@model List<TradeSharp.Core.Models.Company>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div>
+    @foreach (var company in Model)
+    {
+        <li>@company.Name</li>
+    }
+
+</div>
+</body>
+</html>

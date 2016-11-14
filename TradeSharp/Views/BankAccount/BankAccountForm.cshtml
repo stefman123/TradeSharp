@@ -1,0 +1,101 @@
+﻿@model TradeSharp.Core.ViewModels.BankAccountViewModel
+
+@{
+    ViewBag.Title = "My account";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>My Account</h2>
+
+@using (Html.BeginForm("Deposit", "BankAccount", new {id = string.Empty}, FormMethod.Post, new {id = "BankAccountForm"}))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Balance)
+        @Html.DisplayTextFor(m => m.Balance)
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Amount)
+        @Html.TextBoxFor(m => m.Amount, new {@class = "form-control"})
+
+    </div>
+    <div>
+        <button id="Deposit-js" class="btn btn-primary"> Deposit </button>
+        <button id="Withdraw-js" class="btn btn-primary" data-BA="@Model.Amount"> Withdraw </button>
+    </div>
+}
+
+@section scripts
+{
+    <script>
+        $(document)
+            .ready(function() {
+
+
+                $('#Deposit-js')
+                    .click(function(e) {
+                        e.preventDefault();
+
+                        bootbox.confirm("Confirm Transaction",
+                            function(result) {
+                                if (result) {
+
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: "/BankAccount/Deposit",
+                                        data: $("#BankAccountForm").serialize(),
+                                        success: function(response) {
+                                            if (response != null && response.success) {
+                                                toastr.success(response.message);
+                                            } else {
+                                                toastr.error(response.responseText);
+                                            }
+                                        },
+                                        error: function() {
+                                            toastr.error("Transaction Failed");
+                                        }
+                                    });
+                                }
+                            });
+
+                    });
+
+                $('#Withdraw-js')
+                    .click(function(e) {
+
+                        e.preventDefault();
+
+                        bootbox.confirm("Confirm Transaction",
+                            function(result) {
+                                if (result) {
+
+
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: "/BankAccount/Withdraw",
+                                        data: $("#BankAccountForm").serialize(),
+                                        success: function(response) {
+                                            if (response != null && response.success) {
+                                                toastr.success(response.message);
+                                            } else {
+                                                toastr.error(response.responseText);
+                                            }
+
+                                        },
+                                        error: function() {
+                                            toastr.error("Transaction Failed");
+                                        }
+                                    });
+                                }
+                            });
+
+                    });
+
+            });
+
+    </script>
+}
+
+@*@Scripts.Render("~/bundles/jqueryval")*@

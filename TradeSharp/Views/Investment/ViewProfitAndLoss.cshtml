@@ -1,0 +1,22 @@
+@model TradeSharp.Core.ViewModels.ProfitAndLossViewModel
+
+@{
+    ViewBag.Title = "P&L";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Profit & Loss</h2>
+
+<div class="form-group">
+    @Html.LabelFor(c => c.BankAccountBalance)
+    @Html.DisplayTextFor(c => c.BankAccountBalance)
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(c => c.InvestmentAmount)
+    @Html.DisplayTextFor(c => c.InvestmentAmount)
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(c => c.FinalAmount)
+    @Html.DisplayTextFor(c => c.FinalAmount)
+</div>

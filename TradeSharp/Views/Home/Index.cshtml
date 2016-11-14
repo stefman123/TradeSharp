@@ -1,0 +1,38 @@
+﻿@using TradeSharp.Core.Models
+@model TradeSharp.Core.ViewModels.UserAccountCompainesViewModel
+
+@{
+    ViewBag.Title = "Trade Sharp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title </h2>
+<table id="customers" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>Companies</th>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <th>Buy</th>
+            <th>Sell</th>
+        }
+    </tr>
+    </thead>
+    <tbody>
+
+    @foreach (var company in Model.Companies.ToList())
+    {
+        <tr>
+            <td>@Html.ActionLink(company.Name, "CompanyDetails", "Company", new {company.Id}, null)</td>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <td>@Html.ActionLink("Buy", "Buy", "Investment", new {id = company.Id, type = TransactionType.Buy}, null)</td>
+                <td>@Html.ActionLink("Sell", "Sell", "Investment", new {id = company.Id, type = TransactionType.Sell}, null)</td>
+            }
+        </tr>
+    }
+
+    </tbody>
+
+
+</table>

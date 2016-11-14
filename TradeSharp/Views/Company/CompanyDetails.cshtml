@@ -1,0 +1,16 @@
+﻿@model TradeSharp.Core.ViewModels.CompanyViewModal
+
+@{
+    ViewBag.Title = "Companies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Company Details</h2>
+
+<P>@Model.Name</P>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <td>@Html.ActionLink("Buy", "Buy", "Investment", new {id = Model.Id}, null)</td>
+    <td>@Html.ActionLink("Sell", "Sell", "Investment", new {id = Model.Id}, null)</td>
+}

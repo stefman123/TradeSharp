@@ -1,0 +1,118 @@
+﻿@model TradeSharp.Core.ViewModels.InvestmentViewModel
+
+@{
+    ViewBag.Title = "Investment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>@Model.Type.ToString() @Model.CompanyName</h4>
+<hr/>
+@Html.ValidationSummary(true, "Please fix the following errors")
+@using (Html.BeginForm(Model.Type.ToString(), "Investment", new {id = string.Empty}, FormMethod.Post, new {id = "Investmentform"}))
+{
+    @Html.ValidationMessage("error")
+    @Html.HiddenFor(c => c.CompanyId)
+    @Html.HiddenFor(c => c.AccountId)
+    @Html.HiddenFor(c => c.Type)
+
+
+    <div class="form-group">
+        @Html.LabelFor(c => c.CompanyName)
+        @Html.DisplayTextFor(c => c.CompanyName)
+    </div>
+
+    //if (Model.Type == "Sell")
+    //{
+    <div class="form-group">
+        @Html.LabelFor(c => c.CurrentShareQuantity)
+        @Html.DisplayTextFor(c => c.CurrentShareQuantity)
+        @Html.HiddenFor(c => c.CurrentShareQuantity)
+
+        @Html.LabelFor(c => c.CurrentAmount)
+        @Html.DisplayTextFor(c => c.CurrentAmount)
+        @Html.HiddenFor(c => c.CurrentAmount)
+    </div>
+
+    //}
+
+
+    <div class="form-group">
+        @Html.LabelFor(c => c.SharePrice)
+        @Html.TextBoxFor(c => c.SharePrice)
+        @Html.ValidationMessageFor(c => c.SharePrice)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(c => c.ShareQuantity)
+        @Html.TextBoxFor(c => c.ShareQuantity)
+        @Html.ValidationMessageFor(c => c.ShareQuantity)
+    </div>
+
+    <button id="Invests" class="btn btn-primary"> @Model.Type.ToString() </button>
+
+                @*<button id ="Invest" type="submit" class="btn btn-primary"> @Model.Type</button>*@
+}
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document)
+            .ready(function() {
+
+                $("#Invests")
+                    .click(function(e) {
+                        var $myForm = $('#Investmentform');
+
+                        var isValid = $myForm[0].checkValidity();
+                        if (!isValid) {
+                            isValid = null;
+                            //return true;
+                            //$myForm.find(':submit').click();
+                        }
+                        //else
+                        //{
+                        e.preventDefault();
+
+                        bootbox.confirm("Confirm Transaction",
+                            function(result) {
+                                if (result) {
+
+
+                                    $.ajax({
+                                            type: $("#Investmentform").attr('method'),
+                                            url: $("#Investmentform").attr('action'),
+                                            data: $("#Investmentform").serialize(),
+                                            dataType: 'json'
+                                            // serializes the form's elements.
+                                        })
+                                        .done(function(response) {
+                                            alert("success");
+                                            if (response != null && response.success) {
+                                                toastr.success("Transaction Successfull");
+                                            } else {
+                                                toastr.error(response.responseText);
+                                            }
+
+                                        })
+                                        .fail(function() {
+                                            //console.log(e);
+                                            alert("err");
+                                            toastr.error("Transaction Failed");
+                                            $('#Investmentform').submit();
+
+                                        });
+
+
+                                }
+                            });
+                        //}
+
+                        //return true;
+                    });
+
+            });
+
+    </script>
+}
