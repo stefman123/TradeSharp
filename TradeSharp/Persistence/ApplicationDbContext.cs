@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using TradeSharp.Core.Models;
+using TradeSharp.Migrations;
 
 namespace TradeSharp.Persistence
 {
@@ -9,8 +10,12 @@ namespace TradeSharp.Persistence
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", false)
+            : base("TradeSharp")
         {
+            //Database.SetInitializer<ApplicationDbContext>(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
+            //Database.SetInitializer(new CreateDatabaseIfNotExists<ApplicationDbContext>());
+            Database.SetInitializer<ApplicationDbContext>(new CreateDatabaseIfNotExists<ApplicationDbContext>());
+
         }
 
         public DbSet<BankAccount> BankAccounts { get; set; }

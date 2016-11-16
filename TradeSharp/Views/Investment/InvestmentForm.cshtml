@@ -88,7 +88,7 @@
                                             // serializes the form's elements.
                                         })
                                         .done(function(response) {
-                                            alert("success");
+                                      
                                             if (response != null && response.success) {
                                                 toastr.success("Transaction Successfull");
                                             } else {
@@ -97,8 +97,7 @@
 
                                         })
                                         .fail(function() {
-                                            //console.log(e);
-                                            alert("err");
+
                                             toastr.error("Transaction Failed");
                                             $('#Investmentform').submit();
 

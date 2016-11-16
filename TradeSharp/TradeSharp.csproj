@@ -311,6 +311,10 @@
     <Compile Include="Migrations\201611121058441_ApplicationUserChange.Designer.cs">
       <DependentUpon>201611121058441_ApplicationUserChange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611161059533_PopulateCompainies.cs" />
+    <Compile Include="Migrations\201611161059533_PopulateCompainies.Designer.cs">
+      <DependentUpon>201611161059533_PopulateCompainies.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Core\Models\ApplicationUser.cs" />
     <Compile Include="Core\Models\BadRequest.cs" />
@@ -483,6 +487,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611121058441_ApplicationUserChange.resx">
       <DependentUpon>201611121058441_ApplicationUserChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611161059533_PopulateCompainies.resx">
+      <DependentUpon>201611161059533_PopulateCompainies.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
